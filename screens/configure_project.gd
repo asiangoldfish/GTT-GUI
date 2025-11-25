@@ -51,6 +51,7 @@ func _ready() -> void:
 
     else:
         current_state = 0
+        url_prompt.show()
 
 
 # TODO before changing state, check that the input is valid by prompting the
