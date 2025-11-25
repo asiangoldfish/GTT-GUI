@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cyfbbvwslwjav"]
+
+[ext_resource type="Script" uid="uid://7fmo12snmi8q" path="res://menus/request_btn.gd" id="1_c7ai3"]
+
+[node name="RequestBtn" type="Button"]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Request Button"
+script = ExtResource("1_c7ai3")
+
+[connection signal="button_down" from="." to="." method="_on_button_down"]

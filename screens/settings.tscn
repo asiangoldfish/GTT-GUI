@@ -1,0 +1,155 @@
+[gd_scene load_steps=4 format=3 uid="uid://jsjogvlv876q"]
+
+[ext_resource type="Script" uid="uid://cer6ifi2hiffi" path="res://screens/settings.gd" id="1_5em86"]
+
+[sub_resource type="Theme" id="Theme_hfwxu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e8gum"]
+bg_color = Color(0.7330457, 0.761021, 0.76061004, 1)
+
+[node name="Settings" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5em86")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_hfwxu")
+theme_override_styles/panel = SubResource("StyleBoxFlat_e8gum")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 190
+theme_override_constants/margin_top = 150
+theme_override_constants/margin_right = 190
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 71
+text = "Settings"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 125
+theme_override_constants/margin_top = 35
+theme_override_constants/margin_right = 125
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Config" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Config"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TokenLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Config/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "Token"
+
+[node name="ProjectLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Config/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "Project ID"
+
+[node name="UrlLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Config/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Your GitLab instance's URL. Example: https://gitlab.com"
+mouse_filter = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "URL"
+
+[node name="VSeparator" type="VSeparator" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Config"]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Config"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 11
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Config/VBoxContainer2"]
+layout_mode = 2
+
+[node name="TokenValue" type="LineEdit" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Config/VBoxContainer2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+placeholder_text = "********"
+secret = true
+
+[node name="TokenVisibilityToggle" type="Button" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Config/VBoxContainer2/HBoxContainer"]
+layout_mode = 2
+text = "Visible"
+
+[node name="ProjectValue" type="LineEdit" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Config/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+placeholder_text = "1234"
+
+[node name="UrlValue" type="LineEdit" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Config/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+placeholder_text = "https://gitlab.yourinstance.com"
+
+[node name="BackBtn" type="Button" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Back"
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -257.945
+offset_top = 310.58
+offset_right = -25.944946
+offset_bottom = 489.58005
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "Tip: 
+Token, Project ID and URL will
+be set by the program if these
+are empty. You can always
+come back and change them
+later. Remember to resync
+after changing them.
+
+Changes are automatically saved
+on returning to the main page."
+
+[connection signal="button_down" from="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Config/VBoxContainer2/HBoxContainer/TokenVisibilityToggle" to="." method="_on_token_visibility_toggle_button_down"]
+[connection signal="button_down" from="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/BackBtn" to="." method="_on_back_btn_button_down"]

@@ -1,0 +1,112 @@
+[gd_scene load_steps=7 format=3 uid="uid://dveayri1dmfaa"]
+
+[ext_resource type="Script" uid="uid://dynrpeblyxbyp" path="res://screens/main.gd" id="1_m1504"]
+[ext_resource type="Script" uid="uid://cm7nb01xglcgc" path="res://menus/context_menu.gd" id="2_ifaiv"]
+[ext_resource type="PackedScene" uid="uid://dlg4fgj54qrs8" path="res://menus/total_time.tscn" id="3_6flog"]
+
+[sub_resource type="Theme" id="Theme_ig7tw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ig7tw"]
+bg_color = Color(0.7330457, 0.761021, 0.76061004, 1)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_0vcwn"]
+thickness = 0
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_m1504")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_ig7tw")
+theme_override_styles/panel = SubResource("StyleBoxFlat_ig7tw")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="MenuBar" type="MenuBar" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("2_ifaiv")
+
+[node name="File" type="PopupMenu" parent="Panel/MarginContainer/VBoxContainer/MenuBar"]
+oversampling_override = 1.0
+
+[node name="HSplitContainer" type="HSplitContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VSplitContainer" type="VSplitContainer" parent="Panel/MarginContainer/VBoxContainer/HSplitContainer"]
+layout_mode = 2
+
+[node name="RequestsList" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/HSplitContainer/VSplitContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="NewButtons" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/HSplitContainer/VSplitContainer/RequestsList"]
+layout_mode = 2
+
+[node name="OptionsLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/HSplitContainer/VSplitContainer/RequestsList/NewButtons"]
+clip_contents = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Options"
+
+[node name="VSeparator" type="VSeparator" parent="Panel/MarginContainer/VBoxContainer/HSplitContainer/VSplitContainer/RequestsList/NewButtons"]
+layout_mode = 2
+theme_override_constants/separation = 10
+theme_override_styles/separator = SubResource("StyleBoxLine_0vcwn")
+
+[node name="Sync" type="Button" parent="Panel/MarginContainer/VBoxContainer/HSplitContainer/VSplitContainer/RequestsList/NewButtons"]
+layout_mode = 2
+text = "Sync"
+
+[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer/HSplitContainer/VSplitContainer/RequestsList"]
+layout_mode = 2
+
+[node name="HSplitContainer" type="HSplitContainer" parent="Panel/MarginContainer/VBoxContainer/HSplitContainer/VSplitContainer/RequestsList"]
+layout_mode = 2
+size_flags_vertical = 3
+split_offset = 160
+
+[node name="Modes" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/HSplitContainer/VSplitContainer/RequestsList/HSplitContainer"]
+layout_mode = 2
+
+[node name="TotalTimeModeBtn" type="Button" parent="Panel/MarginContainer/VBoxContainer/HSplitContainer/VSplitContainer/RequestsList/HSplitContainer/Modes"]
+layout_mode = 2
+text = "Total Time"
+
+[node name="ContentPanel" type="Panel" parent="Panel/MarginContainer/VBoxContainer/HSplitContainer/VSplitContainer/RequestsList/HSplitContainer"]
+layout_mode = 2
+
+[node name="TotalTime" parent="Panel/MarginContainer/VBoxContainer/HSplitContainer/VSplitContainer/RequestsList/HSplitContainer/ContentPanel" instance=ExtResource("3_6flog")]
+visible = false
+layout_mode = 1
+
+[connection signal="id_pressed" from="Panel/MarginContainer/VBoxContainer/MenuBar/File" to="Panel/MarginContainer/VBoxContainer/MenuBar" method="_on_file_id_pressed"]
+[connection signal="button_down" from="Panel/MarginContainer/VBoxContainer/HSplitContainer/VSplitContainer/RequestsList/NewButtons/Sync" to="." method="sync"]
+[connection signal="button_down" from="Panel/MarginContainer/VBoxContainer/HSplitContainer/VSplitContainer/RequestsList/HSplitContainer/Modes/TotalTimeModeBtn" to="." method="_on_total_time_mode_btn_button_down"]

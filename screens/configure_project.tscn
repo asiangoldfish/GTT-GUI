@@ -1,0 +1,141 @@
+[gd_scene load_steps=4 format=3 uid="uid://daooveeitkfwa"]
+
+[ext_resource type="Script" uid="uid://7k16h5s6crqi" path="res://screens/configure_project.gd" id="1_01lne"]
+
+[sub_resource type="Theme" id="Theme_euk4v"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i10lt"]
+bg_color = Color(0.7330457, 0.761021, 0.76061004, 1)
+
+[node name="ConfigureProject" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_01lne")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_euk4v")
+theme_override_styles/panel = SubResource("StyleBoxFlat_i10lt")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 190
+theme_override_constants/margin_top = 150
+theme_override_constants/margin_right = 190
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 71
+text = "Configure Settings"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_top = 35
+theme_override_constants/margin_right = 120
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="UrlPrompt" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="UrlLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/UrlPrompt"]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "URL"
+
+[node name="UrlValue" type="LineEdit" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/UrlPrompt"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+placeholder_text = "https://your-instance.com"
+
+[node name="TokenPrompt" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="TokenLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/TokenPrompt"]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "Token"
+
+[node name="TokenValue" type="LineEdit" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/TokenPrompt"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+placeholder_text = "*************"
+secret = true
+
+[node name="TokenVisibilityToggle" type="Button" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/TokenPrompt"]
+layout_mode = 2
+text = "Visible"
+
+[node name="ProjectPrompt" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="ProjectLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/ProjectPrompt"]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "Project"
+
+[node name="ProjectValue" type="LineEdit" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/ProjectPrompt"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+placeholder_text = "1234"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="QuitBtn" type="Button" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+text = "Cancel"
+
+[node name="NextBtn" type="Button" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+text = "Next"
+
+[connection signal="text_submitted" from="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/UrlPrompt/UrlValue" to="." method="_on_value_text_submitted"]
+[connection signal="text_submitted" from="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/TokenPrompt/TokenValue" to="." method="_on_value_text_submitted"]
+[connection signal="text_submitted" from="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/ProjectPrompt/ProjectValue" to="." method="_on_value_text_submitted"]
+[connection signal="button_down" from="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/QuitBtn" to="." method="_on_quit_btn_button_down"]
+[connection signal="button_down" from="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/NextBtn" to="." method="_on_next_btn_button_down"]

@@ -1,0 +1,108 @@
+[gd_scene load_steps=3 format=3 uid="uid://culsb5w1vso6o"]
+
+[ext_resource type="Script" uid="uid://bmqobp6jygrrj" path="res://menus/request_menu.gd" id="1_5kesq"]
+[ext_resource type="PackedScene" uid="uid://dcinjdumkq4eb" path="res://menus/request_headers_container.tscn" id="2_7cr38"]
+
+[node name="RequestMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_5kesq")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="MethodMenu" type="OptionButton" parent="VBoxContainer/TitleContainer"]
+layout_mode = 2
+
+[node name="TitleEdit" type="LineEdit" parent="VBoxContainer/TitleContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "New request"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="AddressBar" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "http://localhost:8080/v1/api"
+
+[node name="SendRequest" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Send"
+
+[node name="DummyAddress" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Insert Dummy Address"
+
+[node name="TabContainer2" type="TabContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 1
+
+[node name="Request Body" type="TextEdit" parent="VBoxContainer/TabContainer2"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "Send a request to get a response using the address bar"
+metadata/_tab_index = 0
+
+[node name="Request Headers" type="Panel" parent="VBoxContainer/TabContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+metadata/_tab_index = 1
+
+[node name="RequestHeadersContainer" parent="VBoxContainer/TabContainer2/Request Headers" instance=ExtResource("2_7cr38")]
+layout_mode = 1
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="TabContainer" type="TabContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 0
+
+[node name="Response Body" type="TextEdit" parent="VBoxContainer/TabContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "Send a request to get a response using the address bar"
+metadata/_tab_index = 0
+
+[node name="Headers" type="Panel" parent="VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+metadata/_tab_index = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/TabContainer/Headers"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ResponseHeadersContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Headers/ScrollContainer"]
+layout_mode = 2
+
+[connection signal="text_changed" from="VBoxContainer/TitleContainer/TitleEdit" to="." method="_on_title_edit_text_submitted"]
+[connection signal="text_submitted" from="VBoxContainer/HBoxContainer/AddressBar" to="." method="_on_address_bar_text_submitted"]
+[connection signal="button_down" from="VBoxContainer/HBoxContainer/SendRequest" to="." method="_on_send_request_button_down"]
+[connection signal="button_down" from="VBoxContainer/HBoxContainer/DummyAddress" to="." method="_on_dummy_address_button_down"]

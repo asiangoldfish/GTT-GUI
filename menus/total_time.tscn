@@ -1,0 +1,55 @@
+[gd_scene load_steps=2 format=3 uid="uid://dlg4fgj54qrs8"]
+
+[ext_resource type="Script" uid="uid://bir1utfoi16qu" path="res://menus/total_time.gd" id="1_6d0ke"]
+
+[node name="TotalTime" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6d0ke")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 23
+
+[node name="FormatMenu" type="OptionButton" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="NameLabels" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer"]
+custom_minimum_size = Vector2(203.06, 0)
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="NameValues" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[connection signal="item_selected" from="MarginContainer/VBoxContainer/FormatMenu" to="." method="_on_format_menu_item_selected"]
