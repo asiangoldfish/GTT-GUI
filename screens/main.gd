@@ -34,8 +34,10 @@ func sync():
         "Content-Type: application/json"
     ]
 
+    var project_name = config.get_value("General", "project_id")
+
     # GraphQL
-    var query = '{\"query\": \"query {project(fullPath: \\\"CMSS/SurveyTwin\\\") {issues{nodes{title iid timeEstimate humanTimeEstimate timelogs(first: 100000){nodes{summary timeSpent spentAt user{username}}}}}}}\"}'
+    var query = '{\"query\": \"query {project(fullPath: \\\"%s\\\") {issues{nodes{title iid timeEstimate humanTimeEstimate timelogs(first: 100000){nodes{summary timeSpent spentAt user{username}}}}}}}\"}' % project_name
 
 
     # We have to put the access token into the URL parameter

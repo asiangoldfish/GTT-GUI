@@ -9,8 +9,11 @@ func _ready() -> void:
     file_menu.add_item("Option 1", 0) # Add item with text "Option 1" and ID 0
     file_menu.add_item("Option 2", 1) # Add item with text "Option 2" and ID 1
     file_menu.add_separator() # Add a separator line
+    file_menu.add_item("Back to main menu", 98) 
     file_menu.add_item("Quit", 99) 
 
 func _on_file_id_pressed(id: int) -> void:
     if id == 99:
         get_tree().quit()
+    elif id == 98:
+        get_tree().change_scene_to_file("res://screens/main_menu.tscn")
