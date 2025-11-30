@@ -16,6 +16,7 @@ func _ready() -> void:
 # Arguments:
 #   p (Dictionary): participants
 func populate(p: Dictionary):
+    print(p)
     if not p.is_empty():
         participants = p
 
@@ -55,20 +56,20 @@ func populate(p: Dictionary):
             time_labels.add_child(HSeparator.new())
 
         index += 1
-    
+
 func show_days_hours_minutes(seconds: int) -> String:
     # Work day is 7.5 hours in Norway, usually.
     # 60*60*7.5 = 27000
     var sec_in_workday = 60*60*7.5
-    
+
     var days = floori(seconds / sec_in_workday)
     var remainder = int(seconds) % int(sec_in_workday)
 
     var hours = floori(remainder / 3600.0)
     remainder = hours % 3600
-    
+
     var minutes = floori(remainder / 60.0)
-    
+
     return str(days) + "d " + str(hours) + "h " + str(minutes) + "m"
 
 func show_hours_miuntes(seconds: int) -> String:

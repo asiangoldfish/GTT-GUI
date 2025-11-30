@@ -3,13 +3,19 @@ extends Control
 @onready var http_request: HTTPRequest = find_child("HTTPRequest")
 
 # Modes
+@onready var content_panel = find_child("ContentPanel")
 @onready var total_time_mode = find_child("TotalTime")
+@onready var contributor_time_mode = find_child("ContributorTime")
 
 var config: ConfigFile
 var cache: Array
 
 # Parameters used for visualisations
 var participants = []
+
+func _input(event: InputEvent) -> void:
+    if event.is_action_pressed("back"):
+        get_tree().change_scene_to_file("res://screens/main_menu.tscn")
 
 func _ready() -> void:
     http_request.request_completed.connect(_on_request_completed)
@@ -57,7 +63,7 @@ func sync():
             query)
     else:
         printerr("The query is in incorrect JSON format!")
-    
+
 
 # Callback for a completed HTTP request.
 func _on_request_completed(result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
@@ -67,10 +73,10 @@ func _on_request_completed(result: int, response_code: int, _headers: PackedStri
     if result != HTTPRequest.RESULT_SUCCESS:
         print("HTTP request failed with code: ", response_code)
         return
-    
+
     var text = body.get_string_from_utf8()
     # Attempt to JSONify. If it fails, just output the raw data.
-    
+
     var json_data = JSON.parse_string(text)
 
     if json_data == null:
@@ -92,7 +98,7 @@ func _on_request_completed(result: int, response_code: int, _headers: PackedStri
 
     # Reload cache so we have up-to-date data for visualisation
     load_cache(gitlab_issues)
-    
+
 
 # Load cache.
 #
@@ -101,7 +107,7 @@ func _on_request_completed(result: int, response_code: int, _headers: PackedStri
 # from file.
 func load_cache(data: Array):
     print("Reloading cache")
-    
+
     # Load from file
     if data.size() == 0:
         var cache_file = FileAccess.open(Constants.cache_path, FileAccess.READ)
@@ -114,20 +120,25 @@ func load_cache(data: Array):
     else:
         # Load from data argument
         cache = data
-    
+
     # Each JSON object in `result` has a "timelogs.nodes" field. This is an
     # array. Each object inside this is a registered time and participants
     for issue in cache:
         if not issue.get("timelogs") or not issue.get("timelogs").get("nodes"):
             continue
-        
+
         var entries = issue.get("timelogs").get("nodes")
         for entry in entries:
             if entry.get("user") and entry.get("user").get("username"):
                 var username = entry.get("user").get("username")
                 if not participants.has(username):
                     participants.append(username)
-    
+
+# This method hides all modes. It is useful to open a new mode.
+func hide_all_modes() -> void:
+    for child in content_panel.get_children():
+        child.hide()
+
 # Mode: Show total time
 func _on_total_time_mode_btn_button_down() -> void:
     # Compute total time spent per person
@@ -135,7 +146,7 @@ func _on_total_time_mode_btn_button_down() -> void:
     for issue in cache:
         if not issue.get("timelogs") or not issue.get("timelogs").get("nodes"):
             continue
-        
+
         var entries = issue.get("timelogs").get("nodes")
         for entry in entries:
             if entry.get("user") and entry.get("user").get("username"):
@@ -148,6 +159,31 @@ func _on_total_time_mode_btn_button_down() -> void:
                     total_time[username] += time_spent
 
 
+    hide_all_modes()
     total_time_mode.show()
     total_time_mode.populate(total_time)
-    
+
+
+# Show each contributor's time spent across all issues.
+func _on_contributor_btn_button_down() -> void:
+    ## The expected cache format is the following in JSON format:
+    #[
+    #   {
+    #       "humanTimeEstimate": "3h",
+    #       "iid": "80",
+    #       "timeEstimate": 10800.0,
+    #       "timelogs": {
+    #           "nodes": []
+    #       },
+    #       "title": "[Story] Report: Abstract"
+    #   },
+    #   {...}
+    #]
+    # In short, it's an array of multiple JSON objects. Each object represents
+    # a GitLab issue in DESCENDING order by issue ID.
+    #
+    # We send the entire dictionary array to the ContributorTime menu, it is
+    # passed by reference and lets the menu deal with visualisation.
+    hide_all_modes()
+    contributor_time_mode.show()
+    contributor_time_mode.initialise(cache)

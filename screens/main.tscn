@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dveayri1dmfaa"]
+[gd_scene load_steps=8 format=3 uid="uid://dveayri1dmfaa"]
 
 [ext_resource type="Script" uid="uid://dynrpeblyxbyp" path="res://screens/main.gd" id="1_m1504"]
 [ext_resource type="Script" uid="uid://cm7nb01xglcgc" path="res://menus/context_menu.gd" id="2_ifaiv"]
 [ext_resource type="PackedScene" uid="uid://dlg4fgj54qrs8" path="res://menus/total_time.tscn" id="3_6flog"]
+[ext_resource type="PackedScene" uid="uid://sfm8iemxaxs8" path="res://menus/contributor_time.tscn" id="4_6b72x"]
 
 [sub_resource type="Theme" id="Theme_ig7tw"]
 
@@ -95,10 +96,15 @@ split_offset = 160
 
 [node name="Modes" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/HSplitContainer/VSplitContainer/RequestsList/HSplitContainer"]
 layout_mode = 2
+theme_override_constants/separation = 11
 
 [node name="TotalTimeModeBtn" type="Button" parent="Panel/MarginContainer/VBoxContainer/HSplitContainer/VSplitContainer/RequestsList/HSplitContainer/Modes"]
 layout_mode = 2
 text = "Total Time"
+
+[node name="ContributorBtn" type="Button" parent="Panel/MarginContainer/VBoxContainer/HSplitContainer/VSplitContainer/RequestsList/HSplitContainer/Modes"]
+layout_mode = 2
+text = "Contributor"
 
 [node name="ContentPanel" type="Panel" parent="Panel/MarginContainer/VBoxContainer/HSplitContainer/VSplitContainer/RequestsList/HSplitContainer"]
 layout_mode = 2
@@ -107,6 +113,11 @@ layout_mode = 2
 visible = false
 layout_mode = 1
 
+[node name="ContributorTime" parent="Panel/MarginContainer/VBoxContainer/HSplitContainer/VSplitContainer/RequestsList/HSplitContainer/ContentPanel" instance=ExtResource("4_6b72x")]
+visible = false
+layout_mode = 1
+
 [connection signal="id_pressed" from="Panel/MarginContainer/VBoxContainer/MenuBar/File" to="Panel/MarginContainer/VBoxContainer/MenuBar" method="_on_file_id_pressed"]
 [connection signal="button_down" from="Panel/MarginContainer/VBoxContainer/HSplitContainer/VSplitContainer/RequestsList/NewButtons/Sync" to="." method="sync"]
 [connection signal="button_down" from="Panel/MarginContainer/VBoxContainer/HSplitContainer/VSplitContainer/RequestsList/HSplitContainer/Modes/TotalTimeModeBtn" to="." method="_on_total_time_mode_btn_button_down"]
+[connection signal="button_down" from="Panel/MarginContainer/VBoxContainer/HSplitContainer/VSplitContainer/RequestsList/HSplitContainer/Modes/ContributorBtn" to="." method="_on_contributor_btn_button_down"]
