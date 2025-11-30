@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://dveayri1dmfaa"]
+[gd_scene load_steps=9 format=3 uid="uid://dveayri1dmfaa"]
 
 [ext_resource type="Script" uid="uid://dynrpeblyxbyp" path="res://screens/main.gd" id="1_m1504"]
 [ext_resource type="Script" uid="uid://cm7nb01xglcgc" path="res://menus/context_menu.gd" id="2_ifaiv"]
 [ext_resource type="PackedScene" uid="uid://dlg4fgj54qrs8" path="res://menus/total_time.tscn" id="3_6flog"]
 [ext_resource type="PackedScene" uid="uid://sfm8iemxaxs8" path="res://menus/contributor_time.tscn" id="4_6b72x"]
+[ext_resource type="PackedScene" uid="uid://t8ahlr2i45qv" path="res://menus/sprint_time.tscn" id="5_la406"]
 
 [sub_resource type="Theme" id="Theme_ig7tw"]
 
@@ -106,6 +107,10 @@ text = "Total Time"
 layout_mode = 2
 text = "Contributor"
 
+[node name="SprintTimeBtn" type="Button" parent="Panel/MarginContainer/VBoxContainer/HSplitContainer/VSplitContainer/RequestsList/HSplitContainer/Modes"]
+layout_mode = 2
+text = "Sprint"
+
 [node name="ContentPanel" type="Panel" parent="Panel/MarginContainer/VBoxContainer/HSplitContainer/VSplitContainer/RequestsList/HSplitContainer"]
 layout_mode = 2
 
@@ -117,7 +122,12 @@ layout_mode = 1
 visible = false
 layout_mode = 1
 
+[node name="SprintTime" parent="Panel/MarginContainer/VBoxContainer/HSplitContainer/VSplitContainer/RequestsList/HSplitContainer/ContentPanel" instance=ExtResource("5_la406")]
+visible = false
+layout_mode = 1
+
 [connection signal="id_pressed" from="Panel/MarginContainer/VBoxContainer/MenuBar/File" to="Panel/MarginContainer/VBoxContainer/MenuBar" method="_on_file_id_pressed"]
 [connection signal="button_down" from="Panel/MarginContainer/VBoxContainer/HSplitContainer/VSplitContainer/RequestsList/NewButtons/Sync" to="." method="sync"]
 [connection signal="button_down" from="Panel/MarginContainer/VBoxContainer/HSplitContainer/VSplitContainer/RequestsList/HSplitContainer/Modes/TotalTimeModeBtn" to="." method="_on_total_time_mode_btn_button_down"]
 [connection signal="button_down" from="Panel/MarginContainer/VBoxContainer/HSplitContainer/VSplitContainer/RequestsList/HSplitContainer/Modes/ContributorBtn" to="." method="_on_contributor_btn_button_down"]
+[connection signal="button_down" from="Panel/MarginContainer/VBoxContainer/HSplitContainer/VSplitContainer/RequestsList/HSplitContainer/Modes/SprintTimeBtn" to="." method="_on_sprint_time_btn_button_down"]

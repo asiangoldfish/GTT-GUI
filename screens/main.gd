@@ -6,6 +6,7 @@ extends Control
 @onready var content_panel = find_child("ContentPanel")
 @onready var total_time_mode = find_child("TotalTime")
 @onready var contributor_time_mode = find_child("ContributorTime")
+@onready var sprint_time_mode = find_child("SprintTime")
 
 var config: ConfigFile
 var cache: Array
@@ -43,7 +44,7 @@ func sync():
     var project_name = config.get_value("General", "project_id")
 
     # GraphQL
-    var query = '{\"query\": \"query {project(fullPath: \\\"%s\\\") {issues{nodes{title iid timeEstimate humanTimeEstimate timelogs(first: 100000){nodes{summary timeSpent spentAt user{username}}}}}}}\"}' % project_name
+    var query = '{\"query\": \"query {project(fullPath: \\\"%s\\\") {issues{nodes{title iid timeEstimate humanTimeEstimate milestone{title iid} timelogs(first: 100000){nodes{summary timeSpent spentAt user{username}}}}}}}\"}' % project_name
 
 
     # We have to put the access token into the URL parameter
@@ -187,3 +188,9 @@ func _on_contributor_btn_button_down() -> void:
     hide_all_modes()
     contributor_time_mode.show()
     contributor_time_mode.initialise(cache)
+
+
+func _on_sprint_time_btn_button_down() -> void:
+    hide_all_modes()
+    sprint_time_mode.show()
+    sprint_time_mode.initialise(cache)

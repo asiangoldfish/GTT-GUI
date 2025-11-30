@@ -1,0 +1,37 @@
+[gd_scene load_steps=2 format=3 uid="uid://t8ahlr2i45qv"]
+
+[ext_resource type="Script" uid="uid://yjjsev5bm3xt" path="res://menus/sprint_time.gd" id="1_fkfv8"]
+
+[node name="SprintTime" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fkfv8")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="ContentContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 23
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/ContentContainer"]
+layout_mode = 2
+
+[node name="ContributorsMenu" type="OptionButton" parent="MarginContainer/ContentContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[connection signal="item_selected" from="MarginContainer/ContentContainer/HBoxContainer/ContributorsMenu" to="." method="_on_contributors_menu_item_selected"]
