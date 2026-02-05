@@ -1,13 +1,22 @@
-[gd_scene load_steps=8 format=3 uid="uid://dlwq4kmdb3bhs"]
+[gd_scene load_steps=10 format=3 uid="uid://dlwq4kmdb3bhs"]
 
-[ext_resource type="Script" uid="uid://bn7n1q5r4n3jn" path="res://addons/easy_charts/control_charts/chart.gd" id="1"]
-[ext_resource type="PackedScene" uid="uid://dmesmjhiuqdo4" path="res://addons/easy_charts/utilities/containers/data_tooltip/data_tooltip.tscn" id="2"]
-[ext_resource type="Script" uid="uid://d3eig7fx6wtli" path="res://addons/easy_charts/utilities/containers/canvas/canvas.gd" id="3"]
-[ext_resource type="Script" uid="uid://8xd8yvw7lumm" path="res://addons/easy_charts/utilities/containers/canvas/plot_box/plot_box.gd" id="4"]
-[ext_resource type="Script" uid="uid://doelssxa0y7ap" path="res://addons/easy_charts/utilities/containers/canvas/plot_box/grid_box.gd" id="5"]
-[ext_resource type="PackedScene" uid="uid://c6ffuulowjw4g" path="res://addons/easy_charts/utilities/containers/legend/function_legend.tscn" id="6"]
+[ext_resource type="Script" path="res://addons/easy_charts/control_charts/chart.gd" id="1"]
+[ext_resource type="PackedScene" path="res://addons/easy_charts/utilities/containers/data_tooltip/data_tooltip.tscn" id="2"]
+[ext_resource type="Script" path="res://addons/easy_charts/utilities/containers/canvas/canvas.gd" id="3"]
+[ext_resource type="Script" path="res://addons/easy_charts/utilities/containers/canvas/plot_box/plot_box.gd" id="4"]
+[ext_resource type="Script" path="res://addons/easy_charts/utilities/containers/canvas/plot_box/grid_box.gd" id="5"]
+[ext_resource type="PackedScene" path="res://addons/easy_charts/utilities/containers/legend/function_legend.tscn" id="6"]
+
+[sub_resource type="Theme" id="4"]
 
 [sub_resource type="StyleBoxEmpty" id="8"]
+
+[sub_resource type="StyleBoxFlat" id="5"]
+content_margin_left = 15.0
+content_margin_top = 15.0
+content_margin_right = 15.0
+content_margin_bottom = 15.0
+draw_center = false
 
 [node name="Chart" type="PanelContainer"]
 anchors_preset = 15
@@ -16,6 +25,7 @@ anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 1
+theme = SubResource("4")
 theme_override_styles/panel = SubResource("8")
 script = ExtResource("1")
 
@@ -24,6 +34,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 1
+theme_override_styles/panel = SubResource("5")
 script = ExtResource("3")
 
 [node name="CanvasContainer" type="VBoxContainer" parent="Canvas"]
@@ -77,7 +88,6 @@ anchor_bottom = 1.0
 mouse_default_cursor_shape = 3
 
 [node name="Tooltip" parent="Canvas/CanvasContainer/DataContainer/PlotContainer/PlotBox" instance=ExtResource("2")]
-unique_name_in_owner = true
 layout_mode = 0
 offset_left = -67.0
 offset_top = -33.0
@@ -92,6 +102,3 @@ text = "{xlabel}"
 unique_name_in_owner = true
 use_parent_material = true
 layout_mode = 2
-
-[connection signal="resized" from="Canvas/CanvasContainer/DataContainer/PlotContainer/PlotBox" to="." method="_on_plot_box_resized"]
-[connection signal="function_clicked" from="Canvas/CanvasContainer/DataContainer/FunctionLegend" to="." method="_on_function_legend_function_clicked"]
