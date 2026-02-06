@@ -73,6 +73,11 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Settings"
 
+[node name="ManualBtn" type="Button" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Manual"
+
 [node name="QuitBtn" type="Button" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
@@ -80,4 +85,5 @@ text = "Quit"
 
 [connection signal="button_down" from="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/TrackTimeBtn" to="." method="_on_track_time_btn_button_down"]
 [connection signal="button_down" from="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/SettingsBtn" to="." method="_on_settings_btn_button_down"]
+[connection signal="button_down" from="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/ManualBtn" to="." method="_on_manual_btn_button_down"]
 [connection signal="button_down" from="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/QuitBtn" to="." method="_on_quit_btn_button_down"]

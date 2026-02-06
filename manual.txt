@@ -1,0 +1,14 @@
+Welcome to the manual page!
+
+Git Time Tracker - or simply GTT - is an application to track time estimations and usage on GitLab. The application is licensed under Apache 2.0, meaning you may use and modify it to your heart's content within the license's restrictions.
+
+Configuration
+-------------
+
+When you launch the program for the first time and press "Track Time", you will be prompted to configure your GitLab project (note: you can always change it later in the settings menu). Fill out the following:
+
+1. URL: This is the URL to your GitLab instance, e.g. https//gitlab.com.
+2. Token: This must be generated in your GitLab profile. In your GitLab preferences, go to "Personal access tokens" and press the "Add new token" button. You need to select the following scopes:
+    - read_api
+    - api
+3. Project ID: this is the repository name. For example: my_user/my_project.

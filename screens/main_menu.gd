@@ -14,3 +14,7 @@ func _on_settings_btn_button_down() -> void:
 
 func _on_quit_btn_button_down() -> void:
     get_tree().quit()
+
+
+func _on_manual_btn_button_down() -> void:
+    get_tree().change_scene_to_file("res://screens/help_page.tscn")
