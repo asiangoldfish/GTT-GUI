@@ -4,10 +4,12 @@ class_name ChartProperties
 var title: String
 var x_label: String
 var y_label: String
+var y_label_orientation: Orientation = HORIZONTAL
 
 ## {n}_scale defines in how many sectors the grid will be divided.
-var x_scale: float = 5.0
-var y_scale: float = 2.0
+## This can only be used with non-discrete axes.
+var x_scale: float = 5
+var y_scale: float = 2
 
 var x_tick_size: float = 7
 var x_ticklabel_space: float = 5
@@ -18,10 +20,15 @@ var y_ticklabel_space: float = 5
 var x_scale_type: int = 0
 var y_scale_type: int = 0
 
-var draw_borders: bool = true
+## draw_frame is deprecated. Use a theme instead.
 var draw_frame: bool = true
+
+## draw_background is deprecated. Use a theme instead.
 var draw_background: bool = true
+
+## draw_bounding_box is deprecated. Use a theme instead.
 var draw_bounding_box: bool = true
+
 var draw_vertical_grid: bool = true
 var draw_horizontal_grid: bool = true
 var draw_ticks: bool = true
@@ -53,23 +60,23 @@ var smooth_domain: bool = false
 var max_samples: int = 100
 
 ## Dictionary of colors for all of the Chart elements.
+## Note: This is deprecated. Use a theme instead
 var colors: Dictionary = {
-    frame = Color.WHITE_SMOKE,
-    background = Color.WHITE,
-    borders = Color.RED,
-    bounding_box = Color.BLACK,
-    grid = Color.GRAY,
-    ticks = Color.BLACK,
-    text = Color.BLACK,
-    origin = Color.DIM_GRAY
+	frame = Color.WHITE_SMOKE,
+	background = Color.WHITE,
+	bounding_box = Color.BLACK,
+	grid = Color.GRAY,
+	ticks = Color.BLACK,
+	text = Color.BLACK,
+	origin = Color.DIM_GRAY
 }
 
 var font: FontFile = load("res://addons/easy_charts/utilities/assets/OpenSans-VariableFont_wdth,wght.ttf")
 var font_size: int = 13
 
 func _init() -> void:
-    ThemeDB.set_fallback_font(font)
-    ThemeDB.set_fallback_font_size(font_size)
+	ThemeDB.set_fallback_font(font)
+	ThemeDB.set_fallback_font_size(font_size)
 
 func get_string_size(text: String) -> Vector2:
-    return font.get_string_size(text)
+	return font.get_string_size(text)

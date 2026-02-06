@@ -12,12 +12,9 @@ var radius: float
 
 var slices: Array = []
 var slices_dirs: PackedVector2Array = []
+var slices_conc: Array[bool] = []
 
 var focused_point: Point
-
-func _init(function: Function) -> void:
-	super(function)
-	pass
 
 func _draw() -> void:
 	super._draw()
@@ -46,6 +43,7 @@ func sample(radius: float, center: Vector2, total: float, ratios: PackedFloat32A
 	# Calculate directions
 	slices.clear()
 	slices_dirs = []
+	slices_conc = []
 	
 	var start_angle: float = 0.0
 	for ratio in ratios:
@@ -58,11 +56,14 @@ func sample(radius: float, center: Vector2, total: float, ratios: PackedFloat32A
 				end_angle
 			)
 		)
+		slices_conc.append(abs(end_angle - start_angle) >= PI)
 		start_angle = end_angle
-	
-	for slice in slices:
+
+	for i in slices.size():
+		var slice = slices[i]
 		var mid_point: Vector2 = (slice[-1] + slice[1]) / 2
-		draw_circle(mid_point, 5, Color.WHITE)
+		if (slices_conc[i]): mid_point = (2 * center) - mid_point
+		draw_circle(mid_point, 1, Color.RED)
 		slices_dirs.append(center.direction_to(mid_point))
 
 func _calc_circle_arc_poly(center: Vector2, radius: float, angle_from: float, angle_to: float) -> PackedVector2Array:
@@ -122,6 +123,7 @@ func _input(event: InputEvent) -> void:
 					focused_point = point
 					emit_signal("point_entered", focused_point, function, { interpolation_index = float(i) / float(slices.size() - 1)})
 					return
+
 		# Mouse is not in any slice's box
 		emit_signal("point_exited", focused_point, function)
 		focused_point = null

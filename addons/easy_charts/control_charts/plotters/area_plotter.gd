@@ -1,9 +1,12 @@
 extends LinePlotter
 class_name AreaPlotter
 
-func _init(function: Function) -> void:
-	super(function)
-	pass
+var base_color: Color = Color.WHITE
+
+func _init(chart: Chart, function: Function) -> void:
+	super(chart, function)
+	self.base_color = function.get_color()
+
 
 func _draw_areas() -> void:
 	var box: Rect2 = get_box()
@@ -17,17 +20,35 @@ func _draw_areas() -> void:
 			fp_augmented = _get_spline_points()
 		Function.Interpolation.NONE, _:
 			return
-	
+
 	fp_augmented.push_back(Vector2(fp_augmented[-1].x, box.end.y + 80))
 	fp_augmented.push_back(Vector2(fp_augmented[0].x, box.end.y + 80))
 	
-	var base_color: Color = function.get_color()
-	var colors: PackedColorArray = []
-	for point in fp_augmented:
-		base_color.a = remap(point.y, box.end.y, box.position.y, 0.0, 0.5)
-		colors.push_back(base_color)
+	# Precompute the scaling factor for the remap.
+	var end_y = box.end.y
+	var pos_y = box.position.y
+	var scale = 0.5 / (pos_y - end_y)
+	
+	# Pre-allocate the PackedColorArray based on the number of points.
+	var point_count = fp_augmented.size()
+	var colors = PackedColorArray()
+	colors.resize(point_count)
+	
+	# Compute alpha for each point and assign the color.
+	for i in range(point_count):
+		var point: Vector2 = fp_augmented[i]
+		var alpha: float = (point.y - end_y) * scale
+		colors[i] = Color(base_color, alpha)
+	
+	# Draw the polygon with the computed colors.
 	draw_polygon(fp_augmented, colors)
 
 func _draw() -> void:
 	super._draw()
+
+	#prevent error when drawing with no data.
+	if points_positions.size() < 2:
+		printerr("Cannot plot an area with less than two points!")
+		return
+
 	_draw_areas()
